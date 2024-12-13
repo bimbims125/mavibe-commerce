@@ -67,8 +67,8 @@ class OrderController extends Controller
     $order_data = $request->all();
     $order_data['order_number'] = 'ORD-' . strtoupper(Str::random(15));
     $order_data['user_id'] = $request->user()->id;
-    // $order_data['shipping_id'] = $request->shipping;
-    // $shipping = Shipping::where('id', $order_data['shipping_id'])->pluck('price');
+    $order_data['shipping_id'] = $request->shipping;
+    $shipping = Shipping::where('id', $order_data['shipping_id'])->pluck('price');
     $order_data['sub_total'] = Helper::totalCartPrice();
     $order_data['quantity'] = Helper::cartCount();
 
@@ -76,31 +76,32 @@ class OrderController extends Controller
         $order_data['coupon'] = session('coupon')['value'];
     }
 
-    // if ($request->shipping) {
-    //     if (session('coupon')) {
-    //         $order_data['total_amount'] = Helper::totalCartPrice() + $shipping[0] - session('coupon')['value'];
-    //     } else {
-    //         $order_data['total_amount'] = Helper::totalCartPrice() + $shipping[0];
-    //     }
-    // } else {
-    //     if (session('coupon')) {
-    //         $order_data['total_amount'] = Helper::totalCartPrice() - session('coupon')['value'];
-    //     } else {
-    //         $order_data['total_amount'] = Helper::totalCartPrice();
-    //     }
-    // }
-    if (session('coupon')) {
-    $order_data['total_amount'] = Helper::totalCartPrice() - session('coupon')['value'];
+    if ($request->shipping) {
+        if (session('coupon')) {
+            $order_data['total_amount'] = Helper::totalCartPrice() + $shipping[0] - session('coupon')['value'];
+        } else {
+            $order_data['total_amount'] = Helper::totalCartPrice() + $shipping[0];
+        }
     } else {
-    $order_data['total_amount']= Helper::totalCartPrice();
+        if (session('coupon')) {
+            $order_data['total_amount'] = Helper::totalCartPrice() - session('coupon')['value'];
+        } else {
+            $order_data['total_amount'] = Helper::totalCartPrice();
+        }
     }
+    // if (session('coupon')) {
+    // $order_data['total_amount'] = Helper::totalCartPrice() - session('coupon')['value'];
+    // } else {
+    // $order_data['total_amount']= Helper::totalCartPrice();
+    // }
 
     $snapTokenService = new \App\Services\Midtrans\CreateSnapTokenService($order_data);
     $snapToken = $snapTokenService->getSnapToken();
 
     $order_data['status'] = "pending";
+    $order_data['payment_status'] = '1';
     $order_data['snap_token'] = $snapToken;
-    // dd($order_data['snap_token']);
+    // dd($order_data);
     $order->fill($order_data);
     $order->save();
 
@@ -263,15 +264,5 @@ class OrderController extends Controller
         return $data;
     }
 
-    public function checkShipCost($province_id){
-        Http::get("https://api.rajaongkir.com/starter/province");
-    }
-
-    public function getCity($province_id){
-        Http::withHeaders([
-            'key'=>'f142e73a1751adcc191d50a37f28e9b2'
-        ])->get('https://api.rajaongkir.com/starter/city');
-
-    }
 }
 

@@ -349,16 +349,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label>Province<span>*</span></label>
-                                            <select name="province" id="province_id" required>
-                                                @foreach ($province as $province)
-                                                <option value="{{$province['province_id']}}">{{$province['province']}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
                                 </div>
                                 <!--/ End Form -->
                             </div>
@@ -375,7 +365,7 @@
                                                 Shipping Cost
                                                 @if(count(Helper::shipping())>0 && Helper::cartCount()>0)
                                                     <select name="shipping" class="nice-select">
-                                                        <option value="">Select your address</option>
+                                                        {{-- <option value="">Select your address</option> --}}
                                                         @foreach(Helper::shipping() as $shipping)
                                                         <option value="{{$shipping->id}}" class="shippingOption" data-price="{{$shipping->price}}">{{$shipping->type}}: Rp{{$shipping->price}}</option>
                                                         @endforeach
@@ -400,6 +390,7 @@
                                                 <li class="last"  id="order_total_price">Total<span>Rp{{number_format($total_amount,2)}}</span></li>
                                             @endif
                                         </ul>
+
                                     </div>
                                 </div>
                                 <!--/ End Order Widget -->

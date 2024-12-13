@@ -252,12 +252,9 @@ class CartController extends Controller
         //     $cart->fill($data);
         //     $cart->save();
         // }
-        $province = Http::withHeaders([
-            'key' => 'f142e73a1751adcc191d50a37f28e9b2',
-        ])->get('https://api.rajaongkir.com/starter/province');
 
         return view('frontend.pages.checkout',[
-            "province"=>$province->json()['rajaongkir']['results']
+
         ]);
     }
 
