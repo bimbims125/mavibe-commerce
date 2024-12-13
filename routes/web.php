@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
     use Illuminate\Support\Facades\Route;
     use Illuminate\Support\Facades\Artisan;
     use App\Http\Controllers\AdminController;
@@ -76,6 +78,7 @@
         return view('frontend.pages.cart');
     })->name('cart');
     Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout')->middleware('user');
+    Route::post('/checkout-cart', [CartController::class, 'checkoutCart'])->name('checkout.cart')->middleware('user');
 // Wishlist
     Route::get('/wishlist', function () {
         return view('frontend.pages.wishlist');
@@ -117,7 +120,7 @@
     Route::get('cancel', [PayPalController::class, 'cancel'])->name('payment.cancel');
     Route::get('payment/success', [PayPalController::class, 'success'])->name('payment.success');
 
-    
+
 // Backend section start
 
     Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function () {

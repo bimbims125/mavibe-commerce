@@ -349,7 +349,16 @@
                                             @enderror
                                         </div>
                                     </div>
-
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Province<span>*</span></label>
+                                            <select name="province" id="province_id" required>
+                                                @foreach ($province as $province)
+                                                <option value="{{$province['province_id']}}">{{$province['province']}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!--/ End Form -->
                             </div>
@@ -395,37 +404,14 @@
                                 </div>
                                 <!--/ End Order Widget -->
                                 <!-- Order Widget -->
-                                <div class="single-widget">
-                                    <h2>Payments</h2>
-                                    <div class="content">
-                                        <div class="checkbox">
-                                            {{-- <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox"> Check Payments</label> --}}
-                                            <form-group>
-                                                <input name="payment_method"  type="radio" value="cod"> <label> Cash On Delivery</label><br>
-                                                <input name="payment_method"  type="radio" value="paypal"> <label> BNI</label>
-                                                <input name="payment_method"  type="radio" value="paypal"> <label> BNI</label>
-                                                <input name="payment_method"  type="radio" value="paypal"> <label> BNI</label>
-                                                <input name="payment_method"  type="radio" value="paypal"> <label> BNI</label>
-                                                <input name="payment_method"  type="radio" value="paypal"> <label> BNI</label>
-                                                <input name="payment_method"  type="radio" value="paypal"> <label> BNI</label>
-                                                <input name="payment_method"  type="radio" value="paypal"> <label> BNI</label>
-                                                <input name="payment_method"  type="radio" value="paypal"> <label> BNI</label>
-                                                <input name="payment_method"  type="radio" value="paypal"> <label> BNI</label>
-                                                <input name="payment_method"  type="radio" value="paypal"> <label> BNI</label>
-                                                <input name="payment_method"  type="radio" value="paypal"> <label> BNI</label>
-                                                <input name="payment_method"  type="radio" value="paypal"> <label> BNI</label>
-                                            </form-group>
 
-                                        </div>
-                                    </div>
-                                </div>
                                 <!--/ End Order Widget -->
                                 <!-- Payment Method Widget -->
-                                <div class="single-widget payement">
+                                {{-- <div class="single-widget payement">
                                     <div class="content">
                                         <img src="{{('backend/img/payment-method.png')}}" alt="#">
                                     </div>
-                                </div>
+                                </div> --}}
                                 <!--/ End Payment Method Widget -->
                                 <!-- Button Widget -->
                                 <div class="single-widget get-button">
